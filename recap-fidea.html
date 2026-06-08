@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recap Semplice - Fidea</title>
+  <style>
+    /* =========================================================
+       RECAP SEMPLICE
+       Questo file e pensato per spiegare il progetto a persone
+       non tecniche. Modifica liberamente testi, stati e TODO.
+       ========================================================= */
+
+    :root {
+      --blue-dark: #12324a;
+      --blue: #256fa8;
+      --blue-soft: #e9f4ff;
+      --gray-text: #4d5b66;
+      --gray-border: #d9e2ec;
+      --gray-bg: #f5f8fb;
+      --white: #ffffff;
+      --green: #1f8a4c;
+      --green-bg: #e8f7ee;
+      --orange: #b56612;
+      --orange-bg: #fff2df;
+      --red: #b42318;
+      --red-bg: #ffe8e5;
+      --shadow: 0 14px 34px rgba(18, 50, 74, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--gray-bg);
+      color: #182631;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .wrap {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      background: var(--blue-dark);
+      color: var(--white);
+      padding: 34px 0 38px;
+    }
+
+    .header-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 24px;
+      align-items: end;
+    }
+
+    .label {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 999px;
+      color: #cfe8ff;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 6px 10px;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      font-size: clamp(34px, 6vw, 58px);
+      line-height: 1.05;
+      margin-top: 16px;
+    }
+
+    .subtitle {
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 19px;
+      margin: 18px 0 0;
+      max-width: 720px;
+    }
+
+    .project-box {
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 8px;
+      padding: 18px;
+    }
+
+    .project-box h2 {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    .project-row {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 10px;
+      padding: 8px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .project-row:first-of-type {
+      border-top: 0;
+    }
+
+    .project-row span {
+      color: rgba(255, 255, 255, 0.68);
+      font-weight: 700;
+    }
+
+    .project-row strong {
+      color: var(--white);
+    }
+
+    main {
+      padding: 26px 0 48px;
+    }
+
+    .simple-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: -52px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card,
+    .big-card,
+    .table-card {
+      background: var(--white);
+      border: 1px solid var(--gray-border);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .card {
+      padding: 20px;
+    }
+
+    .card strong {
+      color: var(--blue-dark);
+      display: block;
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+
+    .card p,
+    .big-card p,
+    td {
+      color: var(--gray-text);
+    }
+
+    .section {
+      margin-top: 24px;
+    }
+
+    .section-title {
+      margin-bottom: 14px;
+    }
+
+    .section-title h2 {
+      color: var(--blue-dark);
+      font-size: 28px;
+    }
+
+    .section-title p {
+      color: var(--gray-text);
+      margin: 6px 0 0;
+      max-width: 820px;
+    }
+
+    .big-card {
+      padding: 24px;
+    }
+
+    .explain {
+      background: var(--blue-soft);
+      border-left: 5px solid var(--blue);
+      border-radius: 8px;
+      color: var(--blue-dark);
+      margin: 16px 0;
+      padding: 16px;
+    }
+
+    .two-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    ul {
+      margin: 10px 0 0;
+      padding-left: 20px;
+    }
+
+    li {
+      color: var(--gray-text);
+      margin: 8px 0;
+    }
+
+    .steps {
+      display: grid;
+      gap: 12px;
+      counter-reset: step;
+    }
+
+    .step {
+      background: var(--white);
+      border: 1px solid var(--gray-border);
+      border-radius: 8px;
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 14px;
+      padding: 16px;
+    }
+
+    .step::before {
+      align-items: center;
+      background: var(--blue);
+      border-radius: 50%;
+      color: var(--white);
+      content: counter(step);
+      counter-increment: step;
+      display: flex;
+      font-weight: 800;
+      height: 36px;
+      justify-content: center;
+      width: 36px;
+    }
+
+    .step strong {
+      color: var(--blue-dark);
+      display: block;
+      font-size: 17px;
+      margin-bottom: 4px;
+    }
+
+    .step p {
+      margin: 0;
+    }
+
+    .badge {
+      border-radius: 999px;
+      display: inline-flex;
+      font-size: 13px;
+      font-weight: 800;
+      justify-content: center;
+      min-width: 130px;
+      padding: 6px 10px;
+      white-space: nowrap;
+    }
+
+    .ok {
+      background: var(--green-bg);
+      color: var(--green);
+    }
+
+    .dev {
+      background: var(--orange-bg);
+      color: var(--orange);
+    }
+
+    .no {
+      background: var(--red-bg);
+      color: var(--red);
+    }
+
+    .table-card {
+      overflow: hidden;
+    }
+
+    .table-header {
+      background: var(--blue-dark);
+      color: var(--white);
+      padding: 18px;
+    }
+
+    .table-header h2 {
+      font-size: 22px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      border-collapse: collapse;
+      min-width: 760px;
+      width: 100%;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--gray-border);
+      padding: 14px 16px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fbfe;
+      color: var(--blue-dark);
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+
+    .final-box {
+      background: var(--blue-dark);
+      border-radius: 8px;
+      color: var(--white);
+      padding: 24px;
+    }
+
+    .final-box p,
+    .final-box li {
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .todo {
+      color: var(--red);
+      font-weight: 800;
+    }
+
+    @media (max-width: 860px) {
+      .header-grid,
+      .simple-summary,
+      .two-cols {
+        grid-template-columns: 1fr;
+      }
+
+      .simple-summary {
+        margin-top: -32px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .wrap {
+        width: min(100% - 24px, 1100px);
+      }
+
+      .project-row,
+      .step {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap header-grid">
+      <div>
+        <span class="label">Versione semplice</span>
+        <h1>Fidea spiegata in modo chiaro</h1>
+        <p class="subtitle">
+          Questo documento racconta cosa fa l'app, a cosa serve e cosa e gia pronto,
+          usando parole semplici e senza termini tecnici inutili.
+        </p>
+      </div>
+
+      <!-- Informazioni progetto: sostituire i TODO prima della consegna ufficiale. -->
+      <section class="project-box">
+        <h2>Informazioni Progetto</h2>
+        <div class="project-row">
+          <span>Nome App</span>
+          <strong>Fidea</strong>
+        </div>
+        <div class="project-row">
+          <span>Versione</span>
+          <strong><span class="todo">TODO: INSERIRE DATI REALI</span></strong>
+        </div>
+        <div class="project-row">
+          <span>Data</span>
+          <strong>08/06/2026</strong>
+        </div>
+        <div class="project-row">
+          <span>Referente</span>
+          <strong><span class="todo">TODO: INSERIRE DATI REALI</span></strong>
+        </div>
+      </section>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="simple-summary" aria-label="Riassunto breve">
+      <article class="card">
+        <strong>Che cos'e</strong>
+        <p>Una app per mettere in contatto centri estetici e clienti.</p>
+      </article>
+      <article class="card">
+        <strong>A cosa serve</strong>
+        <p>Fa vedere servizi, appuntamenti, clienti, notifiche e recensioni in un solo posto.</p>
+      </article>
+      <article class="card">
+        <strong>Per chi e</strong>
+        <p>Per il centro estetico che lavora ogni giorno e per il cliente che vuole prenotare.</p>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <h2>1. Idea generale dell'app</h2>
+        <p>Fidea e pensata come uno strumento pratico, non come una semplice vetrina.</p>
+      </div>
+      <div class="big-card">
+        <p>
+          L'app aiuta un centro estetico a gestire meglio il proprio lavoro quotidiano:
+          appuntamenti, servizi, clienti, orari, recensioni e notifiche.
+          Allo stesso tempo permette al cliente di trovare il centro, scegliere un trattamento,
+          prenotare e lasciare una recensione.
+        </p>
+        <div class="explain">
+          In parole molto semplici: il centro usa Fidea per organizzarsi, il cliente usa Fidea
+          per prenotare e restare aggiornato.
+        </div>
+        <div class="two-cols">
+          <article>
+            <h3>Benefici per il centro</h3>
+            <ul>
+              <li>Meno gestione manuale degli appuntamenti.</li>
+              <li>Catalogo trattamenti sempre ordinato.</li>
+              <li>Clienti e prenotazioni visibili in modo chiaro.</li>
+              <li>Recensioni e notifiche raccolte dentro l'app.</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Benefici per il cliente</h3>
+            <ul>
+              <li>Trova il centro estetico dall'app.</li>
+              <li>Vede i servizi disponibili.</li>
+              <li>Prenota senza dover chiamare.</li>
+              <li>Controlla lo storico degli appuntamenti.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <h2>2. Cosa puo fare il centro estetico</h2>
+        <p>Questa e la parte usata dal titolare, dall'amministratore o dall'operatore del centro.</p>
+      </div>
+      <div class="big-card">
+        <h3>Funzioni gia presenti</h3>
+        <ul>
+          <li>Registrare il centro con i dati principali.</li>
+          <li>Completare l'onboarding iniziale del centro con le informazioni operative fondamentali.</li>
+          <li>Entrare nell'area privata del centro.</li>
+          <li>Vedere una dashboard con le informazioni principali della giornata.</li>
+          <li>Gestire agenda e calendario.</li>
+          <li>Chiudere un giorno specifico o cambiare gli orari di una singola data.</li>
+          <li>Aggiungere una nota interna su una data.</li>
+          <li>Vedere la lista clienti ricavata dalle prenotazioni.</li>
+          <li>Modificare il profilo del centro.</li>
+          <li>Configurare trattamenti, prezzi e durata.</li>
+          <li>Leggere le recensioni ricevute.</li>
+          <li>Ricevere notifiche dentro l'app.</li>
+          <li>Generare report sull'attivita del centro, inclusi appuntamenti e no-show.</li>
+          <li>Scaricare i report e, se necessario, eliminare subito i no-show dopo il download.</li>
+        </ul>
+
+        <div class="explain">
+          Esempio pratico: se arriva una nuova prenotazione, il centro la vede in agenda
+          e riceve anche una notifica nell'app. A fine periodo puo scaricare un report
+          per controllare andamento, appuntamenti e assenze.
+        </div>
+
+        <h3>Onboarding centro: cosa deve inserire</h3>
+        <ul>
+          <li>Dati principali del centro: nome, indirizzo, citta e riferimenti.</li>
+          <li>Giorni e orari di apertura.</li>
+          <li>Servizi principali offerti.</li>
+          <li>Prezzo e durata dei trattamenti.</li>
+          <li>Eventuali informazioni di profilo utili al cliente. <span class="todo">TODO: INSERIRE DATI REALI se ci sono altri campi obbligatori.</span></li>
+        </ul>
+
+        <h3>Cose ancora da completare o migliorare</h3>
+        <ul>
+          <li>Notifiche push vere sul telefono, anche quando l'app non e aperta.</li>
+          <li>Modifica piu rapida dei trattamenti gia attivi.</li>
+          <li>Statistiche piu avanzate sulle recensioni.</li>
+          <li>Moderazione delle recensioni.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <h2>3. Cosa puo fare il cliente</h2>
+        <p>Questa e la parte usata dalla persona che vuole prenotare un trattamento.</p>
+      </div>
+      <div class="big-card">
+        <h3>Funzioni gia presenti</h3>
+        <ul>
+          <li>Registrarsi e accedere come cliente.</li>
+          <li>Inserire il codice del centro durante la registrazione o l'onboarding cliente.</li>
+          <li>Vedere i centri estetici disponibili.</li>
+          <li>Aprire la scheda di un centro.</li>
+          <li>Consultare i servizi offerti dal centro.</li>
+          <li>Prenotare un appuntamento.</li>
+          <li>Vedere le proprie prenotazioni.</li>
+          <li>Gestire il profilo personale.</li>
+          <li>Usare la sezione preferiti.</li>
+          <li>Ricevere notifiche dentro l'app.</li>
+          <li>Lasciare una recensione dopo il trattamento.</li>
+        </ul>
+
+        <div class="explain">
+          Esempio pratico: il cliente inserisce il codice del centro, viene collegato
+          al centro corretto, sceglie un trattamento e prenota. Dopo la data
+          dell'appuntamento riceve un invito a lasciare una recensione.
+        </div>
+
+        <h3>Onboarding cliente: passaggio fondamentale</h3>
+        <ul>
+          <li>Il cliente crea il proprio profilo.</li>
+          <li>Inserisce il codice del centro fornito dal centro estetico.</li>
+          <li>L'app collega il cliente al centro corretto.</li>
+          <li>Da quel momento il cliente puo vedere servizi, prenotare e ricevere notifiche legate a quel centro.</li>
+        </ul>
+
+        <h3>Cose ancora da completare o migliorare</h3>
+        <ul>
+          <li>Disponibilita appuntamenti ancora piu precisa rispetto alle modifiche del calendario.</li>
+          <li>Notifiche push native sul telefono.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <h2>4. Come funziona il percorso completo</h2>
+        <p>Qui sotto c'e il flusso spiegato come una sequenza semplice.</p>
+      </div>
+
+      <!-- Timeline semplificata del funzionamento dell'app. -->
+      <div class="steps">
+        <article class="step">
+          <div>
+            <strong>Il centro si registra</strong>
+            <p>Inserisce i dati del centro, come nome, partita IVA, indirizzo e citta.</p>
+          </div>
+        </article>
+        <article class="step">
+          <div>
+            <strong>Il centro completa l'onboarding</strong>
+            <p>Inserisce orari, giorni di apertura, servizi principali, prezzo e durata trattamenti.</p>
+          </div>
+        </article>
+        <article class="step">
+          <div>
+            <strong>Il cliente inserisce il codice centro</strong>
+            <p>Durante la registrazione o il primo accesso, il cliente usa il codice del centro per essere collegato al centro corretto.</p>
+          </div>
+        </article>
+        <article class="step">
+          <div>
+            <strong>Il cliente entra nell'app</strong>
+            <p>Si registra o fa login e puo consultare il centro e i servizi collegati.</p>
+          </div>
+        </article>
+        <article class="step">
+          <div>
+            <strong>Il cliente prenota</strong>
+            <p>Sceglie il centro, vede i servizi e crea una prenotazione.</p>
+          </div>
+        </article>
+        <article class="step">
+          <div>
+            <strong>Il centro gestisce l'appuntamento</strong>
+            <p>La prenotazione compare nell'agenda del centro e genera una notifica.</p>
+          </div>
+        </article>
+        <article class="step">
+          <div>
+            <strong>Il cliente lascia una recensione</strong>
+            <p>Dopo il trattamento riceve un invito a valutare il servizio.</p>
+          </div>
+        </article>
+        <article class="step">
+          <div>
+            <strong>Il centro scarica i report</strong>
+            <p>Il centro puo generare report operativi, controllare i no-show e cancellarli subito dopo il download se necessario.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="table-card">
+        <div class="table-header">
+          <h2>5. Stato attuale, spiegato semplice</h2>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Funzionalita</th>
+                <th>Spiegazione semplice</th>
+                <th>Stato</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>App mobile</td>
+                <td>L'app esiste e contiene sia la parte cliente sia la parte centro.</td>
+                <td><span class="badge ok">Funzionante</span></td>
+              </tr>
+              <tr>
+                <td>Area centro</td>
+                <td>Il centro puo entrare, vedere dashboard, agenda, clienti, servizi e impostazioni.</td>
+                <td><span class="badge ok">Funzionante</span></td>
+              </tr>
+              <tr>
+                <td>Area cliente</td>
+                <td>Il cliente puo accedere, cercare centri, prenotare e vedere appuntamenti.</td>
+                <td><span class="badge ok">Funzionante</span></td>
+              </tr>
+              <tr>
+                <td>Prenotazioni</td>
+                <td>Il cliente crea la prenotazione e il centro la vede nella propria gestione.</td>
+                <td><span class="badge ok">Funzionante</span></td>
+              </tr>
+              <tr>
+                <td>Servizi e trattamenti</td>
+                <td>Il centro puo scegliere trattamenti, inserire prezzo e durata.</td>
+                <td><span class="badge ok">Funzionante</span></td>
+              </tr>
+              <tr>
+                <td>Profilo centro</td>
+                <td>Il centro puo compilare e modificare le informazioni principali.</td>
+                <td><span class="badge ok">Funzionante</span></td>
+              </tr>
+              <tr>
+                <td>Profilo cliente</td>
+                <td>Il cliente ha il suo spazio personale con dati e appuntamenti.</td>
+                <td><span class="badge ok">Funzionante</span></td>
+              </tr>
+              <tr>
+                <td>Notifiche dentro l'app</td>
+                <td>L'app mostra avvisi, per esempio nuova prenotazione o richiesta recensione.</td>
+                <td><span class="badge ok">Funzionante</span></td>
+              </tr>
+              <tr>
+                <td>Recensioni</td>
+                <td>Il cliente puo lasciare stelle e commento, il centro puo vedere le recensioni.</td>
+                <td><span class="badge ok">Funzionante</span></td>
+              </tr>
+              <tr>
+                <td>Onboarding centro</td>
+                <td>Il centro inserisce orari, servizi, prezzi, durata trattamenti e informazioni principali.</td>
+                <td><span class="badge ok">Funzionante</span></td>
+              </tr>
+              <tr>
+                <td>Codice centro cliente</td>
+                <td>Il cliente deve inserire il codice del centro per essere associato al centro corretto.</td>
+                <td><span class="badge dev">In sviluppo</span></td>
+              </tr>
+              <tr>
+                <td>Report operativi</td>
+                <td>Report generati per controllare attivita, appuntamenti e andamento del centro.</td>
+                <td><span class="badge dev">In sviluppo</span></td>
+              </tr>
+              <tr>
+                <td>Report no-show</td>
+                <td>Report degli appuntamenti in cui il cliente non si presenta, con possibilita di eliminarli dopo il download.</td>
+                <td><span class="badge dev">In sviluppo</span></td>
+              </tr>
+              <tr>
+                <td>Notifiche push sul telefono</td>
+                <td>Avvisi veri del telefono anche quando l'app e chiusa.</td>
+                <td><span class="badge dev">In sviluppo</span></td>
+              </tr>
+              <tr>
+                <td>Statistiche recensioni</td>
+                <td>Media voto e dati piu completi sulle recensioni ricevute.</td>
+                <td><span class="badge dev">In sviluppo</span></td>
+              </tr>
+              <tr>
+                <td>Disponibilita avanzata</td>
+                <td>Calcolo ancora piu preciso degli orari disponibili per il cliente.</td>
+                <td><span class="badge dev">In sviluppo</span></td>
+              </tr>
+              <tr>
+                <td>Moderazione recensioni</td>
+                <td>Controllo delle recensioni prima o dopo la pubblicazione.</td>
+                <td><span class="badge no">Non implementato</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="final-box">
+        <h2>6. Riepilogo finale</h2>
+        <p>
+          Oggi Fidea e gia una base concreta e utilizzabile: il centro puo organizzare lavoro,
+          servizi e prenotazioni; il cliente puo consultare, prenotare e lasciare recensioni.
+        </p>
+        <div class="two-cols">
+          <article>
+            <h3>Cosa e gia pronto</h3>
+            <ul>
+              <li>Accesso cliente e centro.</li>
+              <li>Dashboard e agenda centro.</li>
+              <li>Catalogo trattamenti.</li>
+              <li>Prenotazioni.</li>
+              <li>Notifiche in-app.</li>
+              <li>Recensioni.</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Prossimi passi consigliati</h3>
+            <ul>
+              <li>Rendere chiarissimo l'inserimento del codice centro per il cliente.</li>
+              <li>Completare e valorizzare i report, inclusi quelli sui no-show.</li>
+              <li>Aggiungere notifiche push native.</li>
+              <li>Rendere piu rapida la gestione trattamenti.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
